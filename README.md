@@ -2,11 +2,19 @@
 
 A simple SoC Based on Cortex-m0.
 
-## configuration
-Install [verilator](https://veripool.org/guide/latest/)
+## Configuration
+Install [Verilator](https://veripool.org/guide/latest/)(V4.2+ recommended).
+Install [arm-none-elf-gcc](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)(if used) or 
+```
+sudo apt install gcc-arm-none-eabi
+```
+You can also use keil to compile C source.
+## First Start
+Follow these steps to build the simulation environment.
 ```
 cd simulation
 make sim
+make image.hex # GNU gcc only
 ./sim_main -h
 ```
 For more detail, read the source code please.
@@ -64,3 +72,12 @@ Software source for XC-SoC.
 #### README.md
 
 \\\^\_^
+
+
+## Troubleshooting Build Problems
+```
+src_verilator/sim_main.cpp:1:10: fatal error: verilated.h: No such file or directory
+```
+Check whether $(VERILATOR_ROOT) is defined and `make clean`.
+
+
