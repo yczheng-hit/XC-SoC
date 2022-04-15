@@ -1,0 +1,9 @@
+obj_dir
+*.hex
+*.vcd
+*.bin
+*.lst
+*.o
+*.elf
+.vscode
+sim_main

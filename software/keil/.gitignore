@@ -1,0 +1,6 @@
+*
+!code.ini
+!XC-SoC.uvprojx
+!.gitignore
+!startup_CMSDK_CM0.s
+!keilkill.bat
