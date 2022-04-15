@@ -6,7 +6,8 @@ A simple SoC Based on Cortex-m0.
 Install [verilator](https://veripool.org/guide/latest/)
 ```
 cd simulation
-make run
+make sim
+./sim_main -h
 ```
 For more detail, read the source code please.
 
