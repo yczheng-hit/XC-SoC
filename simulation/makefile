@@ -15,7 +15,7 @@ RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Int
 
 # verilator option
 WARE_IGNORE = --Wno-width --Wno-stmtdly --Wno-initialdly --Wno-combdly --Wno-unoptflat --Wno-pinmissing
-VERILATOR_OPTIONS = -DSIMULATION --top-module CortexM0_SoC --timescale 1ns/1ns --cc --trace $(WARE_IGNORE)
+VERILATOR_OPTIONS = -DSIMULATION --top-module CortexM0_SoC --cc --trace $(WARE_IGNORE)
 VERILATOR_VC_OPTIONS = -f ./verilator.vc
 
 # ------- Simulator redirect -----------
