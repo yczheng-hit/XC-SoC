@@ -27,7 +27,7 @@ public:
 		m_core->RSTn = 0;
 		m_core->eval();
 		if(m_trace)
-			m_trace->dump(0);
+			m_trace->dump(m_tickcount);
 		for(int i=0;i<5;i++)
 			this->tick();
 		m_core->RSTn = 1;

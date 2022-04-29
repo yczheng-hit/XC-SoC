@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	TESTBENCH<VCortexM0_SoC> *top = new TESTBENCH<VCortexM0_SoC>(sim_cycle,trace);
 	uart = new UARTSIM(port);
 	uart->setup(16);
-	top->opentrace("mcutest.vcd");
+	top->opentrace("/home/zycccccc/vcd_file/XC-SoC/mcutest.vcd");
 	top->reset();
 	while (!top->done())
 	{

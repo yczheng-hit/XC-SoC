@@ -18,6 +18,7 @@ WARE_IGNORE = --Wno-width --Wno-stmtdly --Wno-initialdly --Wno-combdly --Wno-uno
 VERILATOR_OPTIONS = -DSIMULATION --top-module CortexM0_SoC --cc --trace $(WARE_IGNORE)
 VERILATOR_VC_OPTIONS = -f ./verilator.vc
 
+.PHONY: compile run sim all gtk compile_verilator sim_verilator run_verilator 
 # ------- Simulator redirect -----------
 
 compile : compile_$(SIMULATOR)
@@ -28,8 +29,9 @@ sim     : sim_$(SIMULATOR)
 
 all     : all_$(SIMULATOR)
 
+gtk		:
+	gtkwave.exe /home/zycccccc/vcd_file/XC-SoC/mcutest.vcd &
 # ------- verilator -----------
-.PHONY: compile_verilator sim_verilator run_verilator
 CPP_SRC := ./src_verilator/sim_main.cpp ./src_verilator/sim_uart.cpp
 VERILATOR_ROOT ?= $(shell bash -c 'verilator -V|grep VERILATOR_ROOT | head -1 | sed -e " s/^.*=\s*//"')
 VROOT   := $(VERILATOR_ROOT)
