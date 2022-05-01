@@ -67,7 +67,7 @@ RTL Source, core_m0 included.
 | File                 | Description             |
 | -------------------- | ----------------------- |
 | `cortexm0ds_logic.v` | Cortex-m0 Core          |
-| `CortexM0_SoC.v`     | Top File of The Project |
+| `XC_SoC.v`     | Top File of The Project |
 | `……`                 | ……                      |
 
 #### simulation

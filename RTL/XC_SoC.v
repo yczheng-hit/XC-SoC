@@ -1,4 +1,4 @@
-module CortexM0_SoC (input wire clk,
+module XC_SoC (input wire clk,
                      input wire RSTn,
                      inout wire SWDIO,
                      input wire SWCLK,

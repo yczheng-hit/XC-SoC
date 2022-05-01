@@ -1,7 +1,7 @@
 #include <verilated.h>
 #include <iostream>
 #include <fstream>
-#include "VCortexM0_SoC.h"
+#include "VXC_SoC.h"
 #include "testbench.h"
 #include "sim_uart.h"
 #include "cxxopts.hpp"
@@ -17,7 +17,7 @@ int port = 2333;
 int uart0 = 1;
 UARTSIM *uart;
 
-class TB_VGA : public TESTBENCH<VCortexM0_SoC>
+class TB_VGA : public TESTBENCH<VXC_SoC>
 {
 private:
 public:
@@ -30,7 +30,7 @@ private:
 	}
 
 public:
-	TB_VGA(bool enable, unsigned long count, bool wave) : m_vga(800, 600), TESTBENCH<VCortexM0_SoC>(count, wave)
+	TB_VGA(bool enable, unsigned long count, bool wave) : m_vga(800, 600), TESTBENCH<VXC_SoC>(count, wave)
 	{
 		if (enable)
 			init();
@@ -45,7 +45,7 @@ public:
 			  r,
 			  g,
 			  b);
-		TESTBENCH<VCortexM0_SoC>::tick();
+		TESTBENCH<VXC_SoC>::tick();
 	}
 
 	bool on_tick(void)
