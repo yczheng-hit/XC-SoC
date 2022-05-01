@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <signal.h>
+#include <queue>
 
 #define TXIDLE 0
 #define TXDATA 1
@@ -24,7 +25,9 @@ class UARTSIM
 	//	m_skt   is the socket/port we are listening on
 	//	m_conrd is the file descriptor to read from
 	//	m_conwr is the file descriptor to write to
+private:
 	int m_skt, m_conrd, m_conwr;
+	std::queue <char> uart_fifo,uart_fifo_cp;
 	//
 	// The m_setup register is the 29'bit control register used within
 	// the core.
@@ -38,7 +41,9 @@ class UARTSIM
 	int m_tx_baudcounter, m_tx_state, m_tx_busy;
 	unsigned m_rx_data, m_tx_data;
 	// }}}
-
+public:
+	bool check_fifo(char *ch);
+private:
 	// Private methods
 	// {{{
 	// setup_listener is an attempt to encapsulate all of the network

@@ -11,6 +11,18 @@
 
 #include "sim_uart.h"
 
+bool UARTSIM::check_fifo(char *ch){
+	if ((strlen(ch)!=4)||(uart_fifo.size()!=4))
+		return false;
+	uart_fifo_cp = uart_fifo;
+	for(int i=0;i<4;i++)
+	{
+		if((*ch++)!=uart_fifo_cp.front())
+			return false;
+		uart_fifo_cp.pop();
+	}
+	return true;
+}
 // setup_listener
 // {{{
 void UARTSIM::setup_listener(const int port)
@@ -208,6 +220,12 @@ int UARTSIM::rawtick(const int i_tx, const bool network)
 			{
 				char buf[1];
 				buf[0] = (m_rx_data >> (32 - m_nbits - m_nstop - m_nparity)) & 0x0ff;
+				uart_fifo.push(buf[0]);
+				// uart_fifo max size is 4
+				if (uart_fifo.size() > 4)
+				{
+					uart_fifo.pop();
+				}
 				if ((network) && (1 != send(m_conwr, buf, 1, 0)))
 				{
 					close(m_conwr);
