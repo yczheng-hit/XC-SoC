@@ -9,7 +9,7 @@ module AHBlite_Decoder
     /************************/
 
     /*port2 enable parameter*/
-    parameter Port2_en = 0,
+    parameter Port2_en = 1,
     /************************/
 
     /*UART enable parameter*/
@@ -53,7 +53,7 @@ assign P1_HSEL = (HADDR[31:16] == 16'h2000) ? Port1_en : 1'b0;
 
 //PERIPHRAL-----------------------------
 
-assign P2_HSEL = 1'b0; 
+assign P2_HSEL = (HADDR[31:16] == 16'h4001) ? Port2_en : 1'b0;
 /***********************************/
 
 //0X40000010 UART RX DATA
