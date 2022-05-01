@@ -12,7 +12,6 @@ public:
 	typedef const Cairo::RefPtr<Cairo::Context> CONTEXT;
 	typedef Cairo::RefPtr<Cairo::ImageSurface> CAIROIMG;
 
-
 	CAIROIMG m_pix;
 	CAIROGC m_gc;
 	IMAGE<unsigned> *m_data;
