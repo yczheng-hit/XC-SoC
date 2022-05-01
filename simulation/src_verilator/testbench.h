@@ -1,14 +1,18 @@
 #ifndef _TESTBENCH_H_
 #define _TESTBENCH_H_
 #include <verilated_vcd_c.h>
-template<class MODULE>	class TESTBENCH {
-	unsigned long	m_tickcount;
-	unsigned long	sim_time;
-	VerilatedVcdC	*m_trace;
+template <class MODULE>
+class TESTBENCH
+{
+	unsigned long m_tickcount;
+	unsigned long sim_time;
+	VerilatedVcdC *m_trace;
 	bool trace;
+
 public:
-	MODULE	*m_core;
-	TESTBENCH(unsigned long count,bool wave) {
+	MODULE *m_core;
+	TESTBENCH(unsigned long count, bool wave)
+	{
 		m_core = new MODULE;
 		m_tickcount = 0l;
 		sim_time = count;
@@ -17,42 +21,50 @@ public:
 		Verilated::traceEverOn(true);
 	}
 
-	~TESTBENCH(void) {
+	~TESTBENCH(void)
+	{
 		delete m_core;
 		m_core = NULL;
 	}
 
-	void	reset(void) {
+	void reset(void)
+	{
 		m_core->clk = 0;
 		m_core->RSTn = 0;
 		m_core->eval();
-		if(m_trace)
+		if (m_trace)
 			m_trace->dump(m_tickcount);
-		for(int i=0;i<5;i++)
+		for (int i = 0; i < 5; i++)
 			this->tick();
 		m_core->RSTn = 1;
 	}
 
-	void	tick(void) {
+	void tick(void)
+	{
 		m_tickcount++;
 		// Repeat for the positive edge of the clock
 		// m_core->P1 &= 0xfffe;
 		m_core->clk = 1;
 		m_core->eval();
-		if(m_trace) m_trace->dump(2*m_tickcount-1);
+		if (m_trace)
+			m_trace->dump(2 * m_tickcount - 1);
 
 		// m_core->P1 &= 0xfffe;
-		//negative edge
+		// negative edge
 		m_core->clk = 0;
 		m_core->eval();
-		if (m_trace) {
-			m_trace->dump(2*m_tickcount);
+		if (m_trace)
+		{
+			m_trace->dump(2 * m_tickcount);
 			// m_trace->flush();
 		}
 	}
-		void opentrace(const char *vcdname) {
-		if(trace){
-			if (!m_trace) {
+	void opentrace(const char *vcdname)
+	{
+		if (trace)
+		{
+			if (!m_trace)
+			{
 				m_trace = new VerilatedVcdC;
 				m_core->trace(m_trace, 99);
 				m_trace->open(vcdname);
@@ -61,14 +73,16 @@ public:
 		else
 			m_trace = NULL;
 	}
-	void close(void) {
-		if (m_trace) {
+	void close(void)
+	{
+		if (m_trace)
+		{
 			m_trace->close();
 			m_trace = NULL;
 		}
 	}
 
-	bool	done(void) { return (Verilated::gotFinish()||m_tickcount >= sim_time); }
+	bool done(void) { return (Verilated::gotFinish() || m_tickcount >= sim_time); }
 };
 
-#endif 
+#endif

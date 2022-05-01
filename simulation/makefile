@@ -11,11 +11,11 @@
 SIMULATOR  = verilator
 
 # RTL source
-RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Interconnect.v ../RTL/AHBlite_SlaveMUX.v ../RTL/AHBlite_UART.v ../RTL/AHBlite_VGA.v ../RTL/Block_RAM.v ../RTL/CortexM0_SoC.v ../RTL/FIFO.v ../RTL/UART_RX.v ../RTL/UART_TX.v ../RTL/clkuart_pwm.v ../RTL/cortexm0ds_logic.v ../RTL/vga_controler.v ../RTL/vga_driver.v ../RTL/vga_rom.v ../RTL/vga_top.v
+RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Interconnect.v ../RTL/AHBlite_SlaveMUX.v ../RTL/AHBlite_UART.v ../RTL/AHBlite_VGA.v ../RTL/Block_RAM.v ../RTL/XC_SoC.v ../RTL/FIFO.v ../RTL/UART_RX.v ../RTL/UART_TX.v ../RTL/clkuart_pwm.v ../RTL/cortexm0ds_logic.v ../RTL/vga_controler.v ../RTL/vga_driver.v ../RTL/vga_rom.v ../RTL/vga_top.v
 
 # verilator option
 WARE_IGNORE = --Wno-width --Wno-stmtdly --Wno-initialdly --Wno-combdly --Wno-unoptflat --Wno-pinmissing
-VERILATOR_OPTIONS = -DSIMULATION --top-module CortexM0_SoC --cc --trace $(WARE_IGNORE)
+VERILATOR_OPTIONS = -DSIMULATION --top-module XC_SoC --cc --trace $(WARE_IGNORE)
 VERILATOR_VC_OPTIONS = -f ./verilator.vc
 
 .PHONY: compile run sim all gtk compile_verilator sim_verilator run_verilator 
@@ -48,23 +48,23 @@ compile_verilator :
 obj_dir:  $(RTL_SRC)
 	make compile_verilator --no-print-directory
 
-obj_dir/VCortexM0_SoC__ALL.a: obj_dir/VCortexM0_SoC.mk obj_dir
-	make -C obj_dir -f VCortexM0_SoC.mk VCortexM0_SoC__ALL.a
-obj_dir/verilated.o: obj_dir/VCortexM0_SoC.mk | obj_dir
+obj_dir/VXC_SoC__ALL.a: obj_dir/VXC_SoC.mk obj_dir
+	make -C obj_dir -f VXC_SoC.mk VXC_SoC__ALL.a
+obj_dir/verilated.o: obj_dir/VXC_SoC.mk | obj_dir
 	@if [ ! -d obj_dir ] ; then \
 	  make compile_verilator --no-print-directory; \
 	fi
-	make -C obj_dir -f VCortexM0_SoC.mk verilated.o
-obj_dir/verilated_vcd_c.o: obj_dir/VCortexM0_SoC.mk | obj_dir
+	make -C obj_dir -f VXC_SoC.mk verilated.o
+obj_dir/verilated_vcd_c.o: obj_dir/VXC_SoC.mk | obj_dir
 	@if [ ! -d obj_dir ] ; then \
 	  make compile_verilator --no-print-directory; \
 	fi
-	make -C obj_dir -f VCortexM0_SoC.mk verilated_vcd_c.o
+	make -C obj_dir -f VXC_SoC.mk verilated_vcd_c.o
 
 sim_main:
 	make sim_verilator --no-print-directory
 
-sim_verilator : obj_dir/sim_main.o obj_dir/sim_uart.o obj_dir/VCortexM0_SoC__ALL.a obj_dir/verilated.o obj_dir/vgasim.o obj_dir/verilated_vcd_c.o
+sim_verilator : obj_dir/sim_main.o obj_dir/sim_uart.o obj_dir/VXC_SoC__ALL.a obj_dir/verilated.o obj_dir/vgasim.o obj_dir/verilated_vcd_c.o
 	g++ -std=c++11 $(CFLAGS) $^ $(GFXLIBS) -o ./sim_main
 
 obj_dir/sim_main.o: ./src_verilator/sim_main.cpp ./src_verilator/testbench.h ./src_verilator/sim_uart.h
