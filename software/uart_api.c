@@ -2,8 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 
-
-#if defined ( __CC_ARM   )
+#if defined(__CC_ARM)
 /******************************************************************************/
 /* Retarget functions for ARM DS-5 Professional / Keil MDK                                 */
 /******************************************************************************/
@@ -13,29 +12,34 @@
 #include <rt_misc.h>
 #pragma import(__use_no_semihosting_swi)
 
-struct __FILE { int handle; /* Add whatever you need here */ };
+struct __FILE
+{
+	int handle; /* Add whatever you need here */
+};
 FILE __stdout;
 FILE __stdin;
 
-
-int fputc(int ch, FILE *f) {
-  WriteUART(ch);
-  return (ch);
+int fputc(int ch, FILE *f)
+{
+	WriteUART(ch);
+	return (ch);
 }
 
-int ferror(FILE *f) {
-  /* Your implementation of ferror */
-  return EOF;
+int ferror(FILE *f)
+{
+	/* Your implementation of ferror */
+	return EOF;
 }
 
-
-void _ttywrch(int ch) {
-  WriteUART (ch);
+void _ttywrch(int ch)
+{
+	WriteUART(ch);
 }
 
-
-void _sys_exit(int return_code) {
-label:  goto label;  /* endless loop */
+void _sys_exit(int return_code)
+{
+label:
+	goto label; /* endless loop */
 }
 
 #else
@@ -55,10 +59,7 @@ __attribute__((used)) int _write(int fd, char *ptr, int len)
 	return len;
 }
 
-
 #endif
-
-
 
 char ReadUARTState()
 {
