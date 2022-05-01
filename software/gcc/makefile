@@ -1,7 +1,7 @@
 # 
 # @Author: yczheng-hit
 # @Date: 2022-04-12 10:56:17
-# @LastEditTime: 2022-04-14 10:28:50
+# @LastEditTime: 2022-04-30
 # @LastEditors: yczheng-hit
 # @Description: XC-SoC Software GCC Version Makefile
 # 
@@ -41,7 +41,7 @@ endif
 
 all: all_$(TOOL_CHAIN)
 # 
-all_gcc: startup_CMSDK_CM0.s ../uart_api.c ../main.c
+all_gcc: startup_CMSDK_CM0.s ../uart_api.c ../main.c ../vga_api.c
 	$(GNG_CC) $(GNU_CC_FLAGS) $^\
 		-I ../Include -I ..\
 		-L $(LINKER_SCRIPT_PATH) \

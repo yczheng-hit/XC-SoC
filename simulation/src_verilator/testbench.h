@@ -51,12 +51,13 @@ public:
 		}
 	}
 		void opentrace(const char *vcdname) {
-		if(trace)
+		if(trace){
 			if (!m_trace) {
 				m_trace = new VerilatedVcdC;
 				m_core->trace(m_trace, 99);
 				m_trace->open(vcdname);
 			}
+		}
 		else
 			m_trace = NULL;
 	}

@@ -1,5 +1,6 @@
 obj_dir
 *.hex
+!font.hex
 *.vcd
 *.bin
 *.lst

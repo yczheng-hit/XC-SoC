@@ -28,12 +28,27 @@ For more detail, read the source code please.
 
 #### Files
 
-- [Files in this Repository](#files-in-this-repository)
-  - [FPGA/](#FPGA)
-  - [RTL/](#RTL)
-  - [software/](#software)
-  - [simulation/](#simulation)
-  - [README.md](#readmemd)
+- [XC-SoC](#xc-soc)
+  - [Configuration](#configuration)
+  - [First Start](#first-start)
+      - [Files](#files)
+      - [Memory Map](#memory-map)
+  - [Files in this Repository](#files-in-this-repository)
+      - [FPGA](#fpga)
+      - [RTL](#rtl)
+      - [simulation](#simulation)
+      - [software](#software)
+      - [README.md](#readmemd)
+  - [Troubleshooting Build Problems](#troubleshooting-build-problems)
+  - [TODO](#todo)
+
+#### Memory Map
+| Address Range            | Description |
+| ------------------------ | ----------- |
+| 0x00000000 .. 0x0000ffff | ROMCODE     |
+| 0X20000000 .. 0X2000FFFF | RAMDATA     |
+| 0X40000010 .. 0X4000001B | UART        |
+| 0X40010000 .. 0X4001ffff | VGA         |
 
 ## Files in this Repository
 
@@ -49,32 +64,32 @@ This Verilog file contains the following Verilog modules:
 #### RTL
 
 RTL Source, core_m0 included.
-| File | Description |
-| -------------- | ----------------------------------- |
-| `cortexm0ds_logic.v` | Cortex-m0 Core |
-| `CortexM0_SoC.v` | Top File of The Project |
-| `……` | …… |
+| File                 | Description             |
+| -------------------- | ----------------------- |
+| `cortexm0ds_logic.v` | Cortex-m0 Core          |
+| `CortexM0_SoC.v`     | Top File of The Project |
+| `……`                 | ……                      |
 
 #### simulation
 
 Source file for simulation. Current simulation is finished by verilator. VCS(or more) will be supported soon.
-| File/Folder | Description |
-| -------------- | ----------------------------------- |
-| `makefile` | Makefile for Simulation |
+| File/Folder     | Description                         |
+| --------------- | ----------------------------------- |
+| `makefile`      | Makefile for Simulation             |
 | `src_verilator` | Folder of CPP Source for Simulation |
-| `verilator.vc` | Simulation Script for Verilator |
+| `verilator.vc`  | Simulation Script for Verilator     |
 
 #### software
 
 Software source for XC-SoC.
-| File/Folder | Description |
-| -------------- | ----------------------------------- |
-| `gcc` | Startup File and Makefile Based on GNU GCC |
-| `keil` | Startup File and Keil Project |
-| `main.c` | main.c |
-| `XC-SoC.h` | Core Config for XC-SoC |
-| `include` | M0 Core Headfile |
-| `uart_api.h/c` | API for Uart |
+| File/Folder    | Description                                |
+| -------------- | ------------------------------------------ |
+| `gcc`          | Startup File and Makefile Based on GNU GCC |
+| `keil`         | Startup File and Keil Project              |
+| `main.c`       | main.c                                     |
+| `XC-SoC.h`     | Core Config for XC-SoC                     |
+| `include`      | M0 Core Headfile                           |
+| `uart_api.h/c` | API for Uart                               |
 
 #### README.md
 

@@ -1,5 +1,5 @@
 #
-# Cortex-M0 DesignStart RTL Bundle simulation make file
+# XC-SoC Based on Cortex-M0  simulation make file
 # 
 # Modified by yczheng-hit
 #-----------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 SIMULATOR  = verilator
 
 # RTL source
-RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Interconnect.v ../RTL/AHBlite_SlaveMUX.v ../RTL/AHBlite_UART.v ../RTL/Block_RAM.v ../RTL/CortexM0_SoC.v ../RTL/FIFO.v ../RTL/UART_RX.v ../RTL/UART_TX.v ../RTL/clkuart_pwm.v ../RTL/cortexm0ds_logic.v
+RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Interconnect.v ../RTL/AHBlite_SlaveMUX.v ../RTL/AHBlite_UART.v ../RTL/AHBlite_VGA.v ../RTL/Block_RAM.v ../RTL/CortexM0_SoC.v ../RTL/FIFO.v ../RTL/UART_RX.v ../RTL/UART_TX.v ../RTL/clkuart_pwm.v ../RTL/cortexm0ds_logic.v ../RTL/vga_controler.v ../RTL/vga_driver.v ../RTL/vga_rom.v ../RTL/vga_top.v
 
 # verilator option
 WARE_IGNORE = --Wno-width --Wno-stmtdly --Wno-initialdly --Wno-combdly --Wno-unoptflat --Wno-pinmissing
@@ -30,12 +30,17 @@ sim     : sim_$(SIMULATOR)
 all     : all_$(SIMULATOR)
 
 gtk		:
-	gtkwave.exe /home/zycccccc/vcd_file/XC-SoC/mcutest.vcd &
+	gtkwave.exe `wslpath -m ~`/vcd_file/XC-SoC/mcutest.vcd &
 # ------- verilator -----------
+CXX	:= g++
 CPP_SRC := ./src_verilator/sim_main.cpp ./src_verilator/sim_uart.cpp
 VERILATOR_ROOT ?= $(shell bash -c 'verilator -V|grep VERILATOR_ROOT | head -1 | sed -e " s/^.*=\s*//"')
 VROOT   := $(VERILATOR_ROOT)
 INCS	:= -I./obj_dir/ -I$(VROOT)/include 
+FLAGS	:= -Wall -Og -g -DROOT_VERILATOR -lpthread
+GFXFLAGS:= $(FLAGS) `pkg-config gtkmm-3.0 --cflags`
+GFXLIBS := `pkg-config gtkmm-3.0 --libs`
+CFLAGS  :=  $(GFXFLAGS)
 # Compile RTL
 compile_verilator : 
 	verilator $(VERILATOR_OPTIONS) $(VERILATOR_VC_OPTIONS)
@@ -59,14 +64,17 @@ obj_dir/verilated_vcd_c.o: obj_dir/VCortexM0_SoC.mk | obj_dir
 sim_main:
 	make sim_verilator --no-print-directory
 
-sim_verilator : obj_dir/sim_main.o obj_dir/sim_uart.o obj_dir/VCortexM0_SoC__ALL.a obj_dir/verilated.o obj_dir/verilated_vcd_c.o
-	g++ -std=c++11 -Wall -Og $(INCS) -g $^ -o ./sim_main
+sim_verilator : obj_dir/sim_main.o obj_dir/sim_uart.o obj_dir/VCortexM0_SoC__ALL.a obj_dir/verilated.o obj_dir/vgasim.o obj_dir/verilated_vcd_c.o
+	g++ -std=c++11 $(CFLAGS) $^ $(GFXLIBS) -o ./sim_main
 
 obj_dir/sim_main.o: ./src_verilator/sim_main.cpp ./src_verilator/testbench.h ./src_verilator/sim_uart.h
 obj_dir/sim_uart.o: ./src_verilator/sim_main.cpp ./src_verilator/sim_uart.h
+obj_dir/vgasim.o: ./src_verilator/vgasim.cpp ./src_verilator/vgasim.h ./src_verilator/videomode.h ./src_verilator/image.h
+
+
 
 obj_dir/%.o: ./src_verilator/%.cpp | obj_dir
-	g++ $(FLAGS) $(INCS) -g -c $< -o $@
+	$(CXX) $(CFLAGS) $(INCS) -c $< -o $@
 	
 image.hex: 
 	make -C ../software/gcc/

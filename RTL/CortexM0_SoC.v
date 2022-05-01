@@ -4,7 +4,10 @@ module CortexM0_SoC (
         inout           wire            SWDIO,  
         input           wire            SWCLK,
         output          wire            TXD,
-        input           wire            RXD
+        input           wire            RXD,
+        output          wire            vsync,
+        output          wire            hsync,
+        output          wire            [8:0] vga_data
 );
 
 //------------------------------------------------------------------------------
@@ -170,6 +173,20 @@ wire            HREADYOUT_P1;
 wire    [31:0]  HRDATA_P1;
 wire            HRESP_P1;
 
+wire            HSEL_P2;
+wire    [31:0]  HADDR_P2;
+wire    [2:0]   HBURST_P2;
+wire            HMASTLOCK_P2;
+wire    [3:0]   HPROT_P2;
+wire    [2:0]   HSIZE_P2;
+wire    [1:0]   HTRANS_P2;
+wire    [31:0]  HWDATA_P2;
+wire            HWRITE_P2;
+wire            HREADY_P2;
+wire            HREADYOUT_P2;
+wire    [31:0]  HRDATA_P2;
+wire            HRESP_P2;
+
 wire            HSEL_P3;
 wire    [31:0]  HADDR_P3;
 wire    [2:0]   HBURST_P3;
@@ -231,6 +248,21 @@ AHBlite_Interconnect Interconncet(
         .HRDATA_P1      (HRDATA_P1),
         .HRESP_P1       (HRESP_P1),
 
+
+        // P2
+        .HSEL_P2        (HSEL_P2),
+        .HADDR_P2       (HADDR_P2),
+        .HBURST_P2      (HBURST_P2),
+        .HMASTLOCK_P2   (HMASTLOCK_P2),
+        .HPROT_P2       (HPROT_P2),
+        .HSIZE_P2       (HSIZE_P2),
+        .HTRANS_P2      (HTRANS_P2),
+        .HWDATA_P2      (HWDATA_P2),
+        .HWRITE_P2      (HWRITE_P2),
+        .HREADY_P2      (HREADY_P2),
+        .HREADYOUT_P2   (HREADYOUT_P2),
+        .HRDATA_P2      (HRDATA_P2),
+        .HRESP_P2       (HRESP_P2),
 
         // P3
         .HSEL_P3        (HSEL_P3),
@@ -315,6 +347,32 @@ AHBlite_Block_RAM RAMDATA_Interface(
 );
 
 //------------------------------------------------------------------------------
+// AHB VGA
+//------------------------------------------------------------------------------
+wire [3:0]vga_addr_v;
+wire [4:0]vga_addr_h;
+wire [31:0]vga_ctrl;
+wire vga_ctrl_en;
+AHBlite_VGA u_AHBlite_VGA(
+        .HCLK      (clk      ),
+        .HRESETn   (cpuresetn   ),
+        .HSEL      (HSEL_P2      ),
+        .HADDR     (HADDR_P2     ),
+        .HTRANS    (HTRANS_P2    ),
+        .HSIZE     (HSIZE_P2     ),
+        .HPROT     (HPROT_P2     ),
+        .HWRITE    (HWRITE_P2    ),
+        .HWDATA    (HWDATA_P2    ),
+        .HREADY    (HREADY_P2    ),
+        .HREADYOUT (HREADYOUT_P2 ),
+        .HRDATA    (HRDATA_P2    ),
+        .HRESP     (HRESP_P2     ),
+        .vga_addr_v    (vga_addr_v    ),
+        .vga_addr_h    (vga_addr_h    ),
+        .vga_ctrl  (vga_ctrl  ),
+        .vga_ctrl_en (vga_ctrl_en)
+);
+//------------------------------------------------------------------------------
 // AHB UART
 //------------------------------------------------------------------------------
 
@@ -363,6 +421,22 @@ Block_RAM RAM_DATA(
         .dina           (RAMDATA_WDATA),
         .doutb          (RAMDATA_RDATA),
         .wea            (RAMDATA_WRITE)
+);
+
+//------------------------------------------------------------------------------
+// VGA
+//------------------------------------------------------------------------------
+
+vga_top u_vga_top(
+        .clk      (clk      ),
+        .rst_n    (RSTn    ),
+        .vga_addr_v      (vga_addr_v      ),
+        .vga_addr_h      (vga_addr_h      ),
+        .vga_ctrl    (vga_ctrl    ),
+        .vga_ctrl_en (vga_ctrl_en ),
+        .vsync    (vsync    ),
+        .hsync    (hsync    ),
+        .vga_data (vga_data )
 );
 
 

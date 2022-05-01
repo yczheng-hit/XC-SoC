@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>..\uart_api.c</FilePath>
             </File>
+            <File>
+              <FileName>vga_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\vga_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
