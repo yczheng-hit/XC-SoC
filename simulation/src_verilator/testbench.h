@@ -6,10 +6,10 @@ class TESTBENCH
 {
 	unsigned long m_tickcount;
 	unsigned long sim_time;
-	VerilatedVcdC *m_trace;
-	bool trace;
 
 public:
+	bool trace;
+	VerilatedVcdC *m_trace;
 	MODULE *m_core;
 	TESTBENCH(unsigned long count, bool wave)
 	{
