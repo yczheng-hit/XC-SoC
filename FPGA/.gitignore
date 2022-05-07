@@ -1,0 +1,5 @@
+*
+!*.xdc
+!*.xpr
+!.gitignore
+!fpga_top.v
