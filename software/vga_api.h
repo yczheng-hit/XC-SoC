@@ -27,8 +27,8 @@ typedef struct
 #define BLOCK_CTRL(TYPE, BOARD, BACKGROUND, COLOR) (((TYPE & 0xff) << 24) | ((BOARD & 0xf) << 18) | ((BACKGROUND & 0x1ff) << 9) | (COLOR & 0x1ff))
 
 // VGA
-uint32_t VGA_Read_Ctrl_Global();
-uint32_t VGA_Read_Status_Global();
+uint32_t VGA_Read_Ctrl_Global(void);
+uint32_t VGA_Read_Status_Global(void);
 void VGA_Write_Ctrl_Global(uint32_t data);
 void VGA_Write_Status_Global(uint32_t state);
 uint32_t VGA_Read_Block(uint8_t h, uint8_t v);

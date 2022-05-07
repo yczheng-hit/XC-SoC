@@ -12,7 +12,7 @@
 #include "vga_api.h"
 
 /*Defination*/
-// #define VGA_PRINT_TEST
+#define VGA_PRINT_TEST
 /*Global Variable*/
 int row, col;
 
@@ -36,7 +36,7 @@ void UART_Handler()
 /*SysTick Interupt Handler*/
 void SysTick_Handler()
 {
-  // printf("Systick Handler!\n");
+  printf("Systick Handler!\n");
 }
 
 /*Systick Init*/
@@ -44,7 +44,7 @@ uint32_t Systick_Init(void)
 {
   SysTick->CTRL = 0;
   // CPU clk 25MHz
-  SysTick->LOAD = 12500000;
+  SysTick->LOAD = 10000000;
   SysTick->VAL = 0;
   SysTick->CTRL = 0x7;
   while (SysTick->VAL == 0)
@@ -61,7 +61,7 @@ int main(void)
   VGA_Write_Ctrl_Global(VGA_Read_Status_Global());
   printf("** TEST PASSED0 **\n");
 #ifdef VGA_PRINT_TEST
-  printf("** VGA PRINT TEST START!n");
+  // printf("** VGA PRINT TEST START!n");
   VGA_Print_Left("Hello!", 0, 0);
   VGA_Print_Left("Welcome to XC-SoC", 1, 0);
   VGA_Print_Left("Welcome to XC-SoC", 2, 1);
