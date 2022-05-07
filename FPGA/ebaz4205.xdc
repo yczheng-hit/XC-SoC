@@ -11,6 +11,28 @@ set_property PACKAGE_PIN H16 [get_ports TXD]
 set_property PACKAGE_PIN A20 [get_ports RXD]
 set_property IOSTANDARD LVCMOS33 [get_ports TXD]
 set_property IOSTANDARD LVCMOS33 [get_ports RXD]
+set_property PACKAGE_PIN B20 [get_ports vsync]
+set_property IOSTANDARD LVCMOS33 [get_ports vsync]
+set_property PACKAGE_PIN B19 [get_ports hsync]
+set_property IOSTANDARD LVCMOS33 [get_ports hsync]
+set_property PACKAGE_PIN D20 [get_ports {vga_data[6]}]
+set_property PACKAGE_PIN D18 [get_ports {vga_data[7]}]
+set_property PACKAGE_PIN H17 [get_ports {vga_data[8]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[7]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[8]}]
+set_property PACKAGE_PIN D19 [get_ports {vga_data[5]}]
+set_property PACKAGE_PIN H18 [get_ports {vga_data[4]}]
+set_property PACKAGE_PIN E19 [get_ports {vga_data[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[3]}]
+set_property PACKAGE_PIN F19 [get_ports {vga_data[0]}]
+set_property PACKAGE_PIN K17 [get_ports {vga_data[1]}]
+set_property PACKAGE_PIN F20 [get_ports {vga_data[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[2]}]
 ## set_property LOC V20 [get_ports resetn]
 # set_property PACKAGE_PIN U18 [get_ports clk]
 #set_property PACKAGE_PIN H16 [get_ports ser_tx]
@@ -81,46 +103,46 @@ set_property IOSTANDARD LVCMOS33 [get_ports RXD]
 #set_property IOSTANDARD LVCMOS33 [get_ports O_vs]
 #set_property PACKAGE_PIN B19 [get_ports O_hs]
 #set_property IOSTANDARD LVCMOS33 [get_ports O_hs]
-#set_property PACKAGE_PIN D20 [get_ports {O_red[0]}]
-#set_property PACKAGE_PIN D18 [get_ports {O_red[1]}]
-#set_property PACKAGE_PIN H17 [get_ports {O_red[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_red[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_red[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_red[0]}]
-#set_property PACKAGE_PIN F19 [get_ports {O_blue[0]}]
-#set_property PACKAGE_PIN K17 [get_ports {O_blue[1]}]
-#set_property PACKAGE_PIN F20 [get_ports {O_blue[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_blue[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_blue[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_blue[0]}]
-#set_property PACKAGE_PIN D19 [get_ports {O_green[2]}]
-#set_property PACKAGE_PIN H18 [get_ports {O_green[1]}]
-#set_property PACKAGE_PIN E19 [get_ports {O_green[0]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_green[2]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_green[1]}]
-#set_property IOSTANDARD LVCMOS33 [get_ports {O_green[0]}]
+#set_property PACKAGE_PIN D20 [get_ports {vga_data[0]}]
+#set_property PACKAGE_PIN D18 [get_ports {vga_data[1]}]
+#set_property PACKAGE_PIN H17 [get_ports {vga_data[2]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[2]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[1]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[0]}]
+#set_property PACKAGE_PIN F19 [get_ports {vga_data[0]}]
+#set_property PACKAGE_PIN K17 [get_ports {vga_data[1]}]
+#set_property PACKAGE_PIN F20 [get_ports {vga_data[2]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[2]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[1]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[0]}]
+#set_property PACKAGE_PIN D19 [get_ports {vga_data[2]}]
+#set_property PACKAGE_PIN H18 [get_ports {vga_data[1]}]
+#set_property PACKAGE_PIN E19 [get_ports {vga_data[0]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[2]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[1]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {vga_data[0]}]
 #
 #set_property OFFCHIP_TERM NONE [get_ports O_hs]
 #set_property OFFCHIP_TERM NONE [get_ports O_vs]
-#set_property OFFCHIP_TERM NONE [get_ports O_blue[2]]
-#set_property OFFCHIP_TERM NONE [get_ports O_blue[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_blue[0]]
-#set_property OFFCHIP_TERM NONE [get_ports O_green[2]]
-#set_property OFFCHIP_TERM NONE [get_ports O_green[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_green[0]]
-#set_property OFFCHIP_TERM NONE [get_ports O_red[2]]
-#set_property OFFCHIP_TERM NONE [get_ports O_red[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_red[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[2]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[2]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[2]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
 #
 #set_property PULLUP true [get_ports key0]
 #set_property OFFCHIP_TERM NONE [get_ports O_hs]
 #set_property OFFCHIP_TERM NONE [get_ports O_vs]
-#set_property OFFCHIP_TERM NONE [get_ports O_blue[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_blue[0]]
-#set_property OFFCHIP_TERM NONE [get_ports O_green[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_green[0]]
-#set_property OFFCHIP_TERM NONE [get_ports O_red[1]]
-#set_property OFFCHIP_TERM NONE [get_ports O_red[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[1]]
+#set_property OFFCHIP_TERM NONE [get_ports vga_data[0]]
 
 # NET "I_rst_n" IOSTANDARD = LVCMOS33;
 # NET "I_rst_n" PULLUP;
@@ -138,33 +160,33 @@ set_property IOSTANDARD LVCMOS33 [get_ports RXD]
 # NET "O_vs" IOSTANDARD = LVCMOS33;
 
 # # PlanAhead Generated physical constraints
-# NET "O_red[0]" LOC = D20;
-# NET "O_red[1]" LOC = D18;
-# NET "O_red[2]" LOC = H17;
+# NET "vga_data[0]" LOC = D20;
+# NET "vga_data[1]" LOC = D18;
+# NET "vga_data[2]" LOC = H17;
 
 # # PlanAhead Generated IO constraints
-# NET "O_red[2]" IOSTANDARD = LVCMOS33;
-# NET "O_red[1]" IOSTANDARD = LVCMOS33;
-# NET "O_red[0]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[2]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[1]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[0]" IOSTANDARD = LVCMOS33;
 
 # # PlanAhead Generated physical constraints
-# NET "O_green[0]" LOC = E19;
-# NET "O_green[1]" LOC = H18;
-# NET "O_green[2]" LOC = D19;
+# NET "vga_data[0]" LOC = E19;
+# NET "vga_data[1]" LOC = H18;
+# NET "vga_data[2]" LOC = D19;
 
 # # PlanAhead Generated IO constraints
-# NET "O_green[2]" IOSTANDARD = LVCMOS33;
-# NET "O_green[1]" IOSTANDARD = LVCMOS33;
-# NET "O_green[0]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[2]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[1]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[0]" IOSTANDARD = LVCMOS33;
 
 # # PlanAhead Generated physical constraints
-# NET "O_blue[0]" LOC = F19;
-# NET "O_blue[1]" LOC = K17;
-# NET "O_blue[2]" LOC = F20;
+# NET "vga_data[0]" LOC = F19;
+# NET "vga_data[1]" LOC = K17;
+# NET "vga_data[2]" LOC = F20;
 
 # # PlanAhead Generated IO constraints
-# NET "O_blue[2]" IOSTANDARD = LVCMOS33;
-# NET "O_blue[1]" IOSTANDARD = LVCMOS33;
-# NET "O_blue[0]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[2]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[1]" IOSTANDARD = LVCMOS33;
+# NET "vga_data[0]" IOSTANDARD = LVCMOS33;
 
 

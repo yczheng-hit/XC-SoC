@@ -6,7 +6,7 @@ module vga_controler (input rst_n,
                       input [4:0] vga_addr_h,
                       input [31:0] vga_ctrl,
                       input vga_ctrl_en,
-                      output [11:0] addr,
+                      output [10:0] addr,
                       output [8:0] color,
                       output [6:0] font_type);
     
@@ -20,7 +20,7 @@ module vga_controler (input rst_n,
      ...:    reserved
      31-24:  font_type
      */
-    reg [31:0] block_ctrl[11:0][31:0];
+    reg [31:0] block_ctrl[383:0];
     reg [4:0] hblock_cnt;
     wire [4:0] hblock_cnt_n;
     reg [3:0] vblock_cnt;
@@ -36,17 +36,17 @@ module vga_controler (input rst_n,
     assign tmp2 = (vblock_cnt<<5)+hblock_cnt;
     always @(posedge clk) begin
         if (vga_ctrl_en)
-            block_ctrl[vga_addr_v][vga_addr_h] <= vga_ctrl;
+            block_ctrl[{vga_addr_v,vga_addr_h}] <= vga_ctrl;
             end
         
-        assign font_type    = block_ctrl[vblock_cnt][hblock_cnt][31:24];
+        assign font_type    = block_ctrl[{vblock_cnt,hblock_cnt}][31:24];
         // assign font_type = (hblock_cnt + vblock_cnt * 6'd32)&7'h7f;
         
         assign board = ((vsyn_cnt == 6'd49)||(hsyn_cnt == 5'd0)||(vsyn_cnt == 6'd0))?1'b1:1'd0;
         
-        assign addr = (board)?12'd0:hsyn_cnt - 12'd1 + 12'd24* (vsyn_cnt-12'd1);
+        assign addr = (board)?11'd0:hsyn_cnt - 11'd1 + 11'd24* (vsyn_cnt-11'd1);
         
-        assign color = rdata?block_ctrl[vblock_cnt][hblock_cnt][8:0]:9'h0;
+        assign color = rdata?block_ctrl[{vblock_cnt,hblock_cnt}][8:0]:9'h0;
         
         assign hblock_cnt_n = (hsyn_cnt == 5'd24)?hblock_cnt+1'b1:hblock_cnt;
         always @(posedge clk or negedge rst_n) begin

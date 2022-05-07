@@ -1,10 +1,10 @@
 #include "vga_api.h"
 
-uint32_t VGA_Read_Ctrl_Global()
+uint32_t VGA_Read_Ctrl_Global(void)
 {
 	return VGA_GLOBAL->VGA_CTRL_GLOBAL;
 }
-uint32_t VGA_Read_Status_Global()
+uint32_t VGA_Read_Status_Global(void)
 {
 
 	return VGA_GLOBAL->VGA_STATUS_GLOBAL;

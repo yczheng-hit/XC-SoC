@@ -11,20 +11,19 @@ module vga_top (input clk,
     wire vga_data_en;
     wire [8:0]color;
     wire [6:0] font_type;
-    wire [11:0] addr;
+    wire [10:0] addr;
     wire rdata;
     vga_driver u_vga_driver(
     .clk     (clk),
     .rst_n       (rst_n),
     //from control
     .color       (color),
-    
+    //to control
+    .vga_data_en (vga_data_en),
     //output
     .vsync       (vsync),
     .hsync       (hsync),
-    .vga_data    (vga_data),
-    //to control
-    .vga_data_en (vga_data_en)
+    .vga_data    (vga_data)
     );
     
     vga_rom u_vga_rom(
