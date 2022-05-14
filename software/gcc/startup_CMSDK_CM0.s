@@ -138,7 +138,7 @@ Reset_Handler:
     mov r9, r0
        
 
-    bl    _start
+    bl    main
 
     .pool
     .size Reset_Handler, . - Reset_Handler

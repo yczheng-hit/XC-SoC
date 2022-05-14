@@ -6,36 +6,43 @@
  * @Description: Main.c of XC-SoC Software
  */
 
-#include "stdio.h"
 #include "XC-SoC.h"
 #include "uart_api.h"
 #include "vga_api.h"
 
 /*Defination*/
-#define VGA_PRINT_TEST
+// #define VGA_PRINT_TEST
 /*Global Variable*/
 int row, col;
 
 /*UART Interupt Handler*/
 void UART_Handler()
 {
-  char ch;
-  ch = ReadUART();
-  WriteUART(ch);
-  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE(ch), 0, RGB(0, 0, 0), RGB(7, 7, 7)), row, col);
-  row++;
-  if (row >= 32)
+  // char ch;
+  // ch = ReadUART();
+  for (int i = 0; i < 16; i++)
   {
-    row = 0;
-    col++;
-    if (col >= 12)
-      col = 0;
+    uart_fifo[i] = ReadUART();
   }
+  for (int i = 0; i < 16; i++)
+  {
+    WriteUART(uart_fifo[i]);
+  }
+  // VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE(ch), 0, RGB(0, 0, 0), RGB(7, 7, 7)), row, col);
+  // row++;
+  // if (row >= 32)
+  // {
+  //   row = 0;
+  //   col++;
+  //   if (col >= 12)
+  //     col = 0;
+  // }
 }
 
 /*SysTick Interupt Handler*/
 void SysTick_Handler()
 {
+
   printf("Systick Handler!\n");
 }
 
@@ -78,5 +85,13 @@ int main(void)
 
   while (1)
   {
+    unsigned char ch;
+  again:
+    ch = ReadUART_NoWait();
+    if (ch != 0)
+    {
+      WriteUART(ch);
+      goto again;
+    }
   }
 }

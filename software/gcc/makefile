@@ -32,7 +32,7 @@ GNU_OBJCOPY = arm-none-eabi-objcopy
 LINKER_SCRIPT_PATH = ./scripts
 LINKER_SCRIPT = $(LINKER_SCRIPT_PATH)/cmsdk_cm0.ld
 
-GNU_CC_FLAGS = -g -O3 -mthumb $(CPU_TYPE)
+GNU_CC_FLAGS = -g -O3 -mthumb $(CPU_TYPE) -ffreestanding -nostdlib
 
 ifeq ($(COMPILE_BIGEND),1)
  # Big Endian
