@@ -1,5 +1,5 @@
 
-module clkuart_pwm #(parameter BPS_PARA = 217)
+module clkuart_pwm #(parameter BPS_PARA = 347)
                     (input bps_en,
                      input clk,
                      input RSTn,

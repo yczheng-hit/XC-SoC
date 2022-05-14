@@ -12,7 +12,9 @@ module AHBlite_UART(input wire HCLK,
                     output reg [31:0] HRDATA,
                     output wire HRESP,
                     input wire [7:0] UART_RX,
-                    input wire state,
+                    input wire RX_FIFO_EMPTY,
+                    input wire TX_FIFO_FULL,
+                    output wire rx_en,
                     output wire tx_en,
                     output wire [7:0] UART_TX);
     
@@ -48,12 +50,12 @@ module AHBlite_UART(input wire HCLK,
     always@(*) begin
         if (rd_en_reg) begin
             if (addr_reg == 4'h0) HRDATA <= {24'b0,UART_RX};
-            else if (addr_reg == 4'h4) HRDATA <= {31'b0,state};
+            else if (addr_reg == 4'h4) HRDATA <= {30'b0,RX_FIFO_EMPTY,TX_FIFO_FULL};
             else HRDATA <= 32'b0;
             end else
             HRDATA <= 32'b0;
         end
-        
+        assign rx_en   = rd_en_reg ? (addr_reg == 4'h0) : 1'b0;
         assign tx_en   = wr_en_reg ? 1'b1 : 1'b0;
         assign UART_TX = wr_en_reg ? HWDATA[7:0] : 8'b0;
         

@@ -1,11 +1,34 @@
 module UART_RX(input clk,
                input clk_uart,
                input RSTn,
+               input rx_en,
                input RXD,
-               output reg [7:0] data,
-               output wire interrupt,
+            //    output reg [7:0] data,
+               output wire RX_FIFO_EMPTY,
+               output wire [7:0] FIFOdata,
+               output wire FIFOfull,
                output wire bps_en);
-    
+    //FIFO 8bit-16depth
+    wire FIFOrd_en;
+    wire FIFOwr_en;
+    // wire [7:0] FIFOdata;
+    wire FIFOempty;
+    // wire FIFOfull;
+    wire interrupt;
+    reg [7:0] data;
+    FIFO u_FIFO(
+    	.clock (clk ),
+        .sclr  (RSTn  ),
+        .rdreq (FIFOrd_en ),
+        .wrreq (FIFOwr_en ),
+        .full  (FIFOfull  ),
+        .empty (FIFOempty ),
+        .data  (data  ),
+        .q     (FIFOdata     )
+    );
+    assign FIFOrd_en = rx_en;
+    assign FIFOwr_en = interrupt;
+    assign RX_FIFO_EMPTY = FIFOempty;
     //shift register
     reg [7:0] shift_reg;
     always@(posedge clk) begin

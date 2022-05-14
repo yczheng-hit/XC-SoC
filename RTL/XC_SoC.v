@@ -1,12 +1,12 @@
 module XC_SoC (input wire clk,
-                     input wire RSTn,
-                     inout wire SWDIO,
-                     input wire SWCLK,
-                     output wire TXD,
-                     input wire RXD,
-                     output wire vsync,
-                     output wire hsync,
-                     output wire [8:0] vga_data);
+               input wire RSTn,
+               inout wire SWDIO,
+               input wire SWCLK,
+               output wire TXD,
+               input wire RXD,
+               output wire vsync,
+               output wire hsync,
+               output wire [8:0] vga_data);
     
     //------------------------------------------------------------------------------
     // DEBUG IOBUF
@@ -374,9 +374,11 @@ module XC_SoC (input wire clk,
     // AHB UART
     //------------------------------------------------------------------------------
     
-    wire state;
+    wire RX_FIFO_EMPTY;
+    wire TX_FIFO_FULL;
     wire [7:0] UART_RX_data;
     wire [7:0] UART_TX_data;
+    wire rx_en;
     wire tx_en;
     
     AHBlite_UART UART_Interface(
@@ -394,7 +396,9 @@ module XC_SoC (input wire clk,
     .HREADYOUT      (HREADYOUT_P3),
     .HRESP          (HRESP_P3),
     .UART_RX        (UART_RX_data),
-    .state          (state),
+    .TX_FIFO_FULL   (TX_FIFO_FULL),
+    .RX_FIFO_EMPTY  (RX_FIFO_EMPTY),
+    .rx_en          (rx_en),
     .tx_en          (tx_en),
     .UART_TX        (UART_TX_data)
     );
@@ -452,7 +456,7 @@ module XC_SoC (input wire clk,
     `ifdef SIMULATION
     .BPS_PARA(16)
     `else
-    .BPS_PARA(217)
+    .BPS_PARA(347)
     `endif
     )
     clkuart_pwm(
@@ -466,9 +470,11 @@ module XC_SoC (input wire clk,
     .clk(clk),
     .clk_uart(clk_uart),
     .RSTn(cpuresetn),
+    .rx_en(rx_en),
     .RXD(RXD),
-    .data(UART_RX_data),
-    .interrupt(interrupt_UART),
+    .FIFOdata(UART_RX_data),
+    .RX_FIFO_EMPTY(RX_FIFO_EMPTY),
+    .FIFOfull(interrupt_UART),
     .bps_en(bps_en_rx)
     );
     
@@ -479,7 +485,7 @@ module XC_SoC (input wire clk,
     .data(UART_TX_data),
     .tx_en(tx_en),
     .TXD(TXD),
-    .state(state),
+    .TX_FIFO_FULL(TX_FIFO_FULL),
     .bps_en(bps_en_tx)
     );
     
