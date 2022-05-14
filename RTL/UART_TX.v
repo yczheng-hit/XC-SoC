@@ -4,7 +4,7 @@ module UART_TX(input clk,
                input [7:0] data,
                input tx_en,
                output reg TXD,
-               output wire state,
+               output wire TX_FIFO_FULL,
                output wire bps_en);
     
     //FIFO 8bit-16depth
@@ -27,7 +27,7 @@ module UART_TX(input clk,
     //FIFO write control
     assign FIFOwr_en = (~FIFOfull) & tx_en;
     
-    assign state = FIFOfull;
+    assign TX_FIFO_FULL = FIFOfull;
     
     //UART TX
     reg counter_en;

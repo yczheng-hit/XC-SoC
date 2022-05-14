@@ -36,7 +36,13 @@ try:
                 f.write('00000000')
                 f.write('\r\n')
             while(hexData[i]):
-                tmp = hexData[i].pop(3)+hexData[i].pop(2)+hexData[i].pop(1)+hexData[i].pop(0)
+                curHexLength = len(hexData[i])
+                tmp = ''
+                for j in range(0,4):
+                    if(j<curHexLength):
+                        tmp = hexData[i].pop(0) + tmp
+                    else:
+                        tmp = '00' + tmp
                 f.write(tmp)
                 byteLength = byteLength+4
                 f.write('\r\n')
