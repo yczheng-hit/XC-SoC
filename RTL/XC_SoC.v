@@ -6,6 +6,10 @@ module XC_SoC (input wire clk,
                input wire RXD,
                output wire vsync,
                output wire hsync,
+               output wire scs,
+               output wire sck,
+               output wire mosi,
+               input wire miso,
                output wire [8:0] vga_data);
     
     //------------------------------------------------------------------------------
@@ -76,7 +80,7 @@ module XC_SoC (input wire clk,
     // Instantiate Cortex-M0 processor logic level
     //------------------------------------------------------------------------------
     
-    cortexm0ds_logic u_logic (
+    CORTEXM0INTEGRATION u_logic (
     
     // System inputs
     .FCLK           (clk),           //FREE running clock
@@ -199,6 +203,20 @@ module XC_SoC (input wire clk,
     wire    [31:0]  HRDATA_P3;
     wire            HRESP_P3;
     
+    wire            HSEL_P4;
+    wire    [31:0]  HADDR_P4;
+    wire    [2:0]   HBURST_P4;
+    wire            HMASTLOCK_P4;
+    wire    [3:0]   HPROT_P4;
+    wire    [2:0]   HSIZE_P4;
+    wire    [1:0]   HTRANS_P4;
+    wire    [31:0]  HWDATA_P4;
+    wire            HWRITE_P4;
+    wire            HREADY_P4;
+    wire            HREADYOUT_P4;
+    wire    [31:0]  HRDATA_P4;
+    wire            HRESP_P4;
+    
     AHBlite_Interconnect Interconncet(
     .HCLK           (clk),
     .HRESETn        (cpuresetn),
@@ -275,7 +293,22 @@ module XC_SoC (input wire clk,
     .HREADY_P3      (HREADY_P3),
     .HREADYOUT_P3   (HREADYOUT_P3),
     .HRDATA_P3      (HRDATA_P3),
-    .HRESP_P3       (HRESP_P3)
+    .HRESP_P3       (HRESP_P3),
+    
+    // P4
+    .HSEL_P4        (HSEL_P4),
+    .HADDR_P4       (HADDR_P4),
+    .HBURST_P4      (HBURST_P4),
+    .HMASTLOCK_P4   (HMASTLOCK_P4),
+    .HPROT_P4       (HPROT_P4),
+    .HSIZE_P4       (HSIZE_P4),
+    .HTRANS_P4      (HTRANS_P4),
+    .HWDATA_P4      (HWDATA_P4),
+    .HWRITE_P4      (HWRITE_P4),
+    .HREADY_P4      (HREADY_P4),
+    .HREADYOUT_P4   (HREADYOUT_P4),
+    .HRDATA_P4      (HRDATA_P4),
+    .HRESP_P4       (HRESP_P4)
     
     );
     
@@ -401,6 +434,30 @@ module XC_SoC (input wire clk,
     .rx_en          (rx_en),
     .tx_en          (tx_en),
     .UART_TX        (UART_TX_data)
+    );
+    
+    //------------------------------------------------------------------------------
+    // AHB SPI
+    //------------------------------------------------------------------------------
+    
+    AHBlite_SPI SPI_Interface(
+    .HCLK           (clk),
+    .HRESETn        (cpuresetn),
+    .HSEL           (HSEL_P4),
+    .HADDR          (HADDR_P4),
+    .HPROT          (HPROT_P4),
+    .HSIZE          (HSIZE_P4),
+    .HTRANS         (HTRANS_P4),
+    .HWDATA         (HWDATA_P4),
+    .HWRITE         (HWRITE_P4),
+    .HRDATA         (HRDATA_P4),
+    .HREADY         (HREADY_P4),
+    .HREADYOUT      (HREADYOUT_P4),
+    .HRESP          (HRESP_P4),
+    .scs  (scs),
+    .sck  (sck),
+    .mosi (mosi),
+    .miso (miso)
     );
     
     //------------------------------------------------------------------------------

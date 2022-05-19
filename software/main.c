@@ -9,6 +9,7 @@
 #include "XC-SoC.h"
 #include "uart_api.h"
 #include "vga_api.h"
+#include "spi_api.h"
 
 /*Defination*/
 // #define VGA_PRINT_TEST
@@ -58,7 +59,6 @@ uint32_t Systick_Init(void)
     ;
   return (SysTick->VAL);
 }
-
 /*Main Function*/
 int main(void)
 {
@@ -82,16 +82,26 @@ int main(void)
 #endif
 
   printf("** TEST PASSED1 **\n");
-
   while (1)
   {
     unsigned char ch;
   again:
     ch = ReadUART_NoWait();
-    if (ch != 0)
+    if ((ch == 0) || (ch == '\n') || (ch == '\r'))
     {
-      WriteUART(ch);
+      /* code */
       goto again;
     }
+
+    switch (ch)
+    {
+    case '1':
+      printf("Received: 1\n");
+      break;
+    default:
+      printf("Command Error\n");
+      break;
+    }
+    printf("Received: %c\n", ch);
   }
 }

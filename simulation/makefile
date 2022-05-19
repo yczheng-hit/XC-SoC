@@ -11,7 +11,7 @@
 SIMULATOR  = verilator
 
 # RTL source
-RTL_SRC = ../RTL/AHBlite_Block_RAM.v ../RTL/AHBlite_Decoder.v ../RTL/AHBlite_Interconnect.v ../RTL/AHBlite_SlaveMUX.v ../RTL/AHBlite_UART.v ../RTL/AHBlite_VGA.v ../RTL/Block_RAM.v ../RTL/XC_SoC.v ../RTL/FIFO.v ../RTL/UART_RX.v ../RTL/UART_TX.v ../RTL/clkuart_pwm.v ../RTL/cortexm0ds_logic.v ../RTL/vga_controler.v ../RTL/vga_driver.v ../RTL/vga_rom.v ../RTL/vga_top.v
+RTL_SRC = $(wildcard ../RTL/*.v)
 
 # verilator option
 WARE_IGNORE = --Wno-width --Wno-stmtdly --Wno-initialdly --Wno-combdly --Wno-unoptflat --Wno-pinmissing
