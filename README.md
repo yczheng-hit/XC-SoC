@@ -4,7 +4,7 @@ A simple SoC Based on Cortex-m0.
 
 ## Configuration
 
-Install [Verilator](https://veripool.org/guide/latest/)(V4.2+ recommended).
+Install [Verilator](https://veripool.org/guide/latest/).
 Install [arm-none-elf-gcc](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads)(if used) or
 
 ```
@@ -48,6 +48,7 @@ For more detail, read the source code please.
 | 0x00000000 .. 0x0000ffff | ROMCODE     |
 | 0X20000000 .. 0X2000FFFF | RAMDATA     |
 | 0X40000010 .. 0X4000001B | UART        |
+| 0X40000020 .. 0X4000002B | SPI         |
 | 0X40010000 .. 0X4001ffff | VGA         |
 
 ## Files in this Repository
@@ -61,13 +62,15 @@ This Verilog file contains the following Verilog modules:
 | `XC-SoC.xpr`   | Vivado Project                      |
 | `ebaz4205.xdc` | Constraints File for EBAZ4205 Board |
 
+The IP core clk_wiz is not included currently.
+
 #### RTL
 
 RTL Source, core_m0 included.
 | File                 | Description             |
 | -------------------- | ----------------------- |
 | `cortexm0ds_logic.v` | Cortex-m0 Core          |
-| `XC_SoC.v`     | Top File of The Project |
+| `XC_SoC.v`           | Top File of The Project |
 | `……`                 | ……                      |
 
 #### simulation
@@ -89,7 +92,8 @@ Software source for XC-SoC.
 | `main.c`       | main.c                                     |
 | `XC-SoC.h`     | Core Config for XC-SoC                     |
 | `include`      | M0 Core Headfile                           |
-| `uart_api.h/c` | API for Uart                               |
+| `uart_api.h/c` | API for UART                               |
+| `spi_api.h/c`  | API for SPI                                |
 
 #### README.md
 
@@ -101,12 +105,9 @@ Software source for XC-SoC.
 src_verilator/sim_main.cpp:1:10: fatal error: verilated.h: No such file or directory
 ```
 
-Check whether $(VERILATOR_ROOT) is defined and `make clean`.
+Check whether verilator is installed correctly and `make clean`.
 
 ## TODO
 
-1. UART FIFO
-2. SPI
-3. VGA
-4. IIC
-5. FM
+1. IIC (Waiting for board T_T)
+2. FM  (Waiting for board T_T)
