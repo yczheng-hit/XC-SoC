@@ -127,6 +127,9 @@ printf(char *fmt, ...)
       for(; *s; s++)
         WriteUART(*s);
       break;
+    case 'c':
+      WriteUART(va_arg(ap, int));
+      break;
     case '%':
       WriteUART('%');
       break;

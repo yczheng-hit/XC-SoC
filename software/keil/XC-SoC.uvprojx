@@ -404,6 +404,11 @@
               <FileType>1</FileType>
               <FilePath>..\vga_api.c</FilePath>
             </File>
+            <File>
+              <FileName>spi_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\spi_api.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

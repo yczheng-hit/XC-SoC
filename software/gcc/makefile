@@ -41,7 +41,7 @@ endif
 
 all: all_$(TOOL_CHAIN)
 # 
-all_gcc: startup_CMSDK_CM0.s ../uart_api.c ../main.c ../vga_api.c
+all_gcc: startup_CMSDK_CM0.s ../uart_api.c ../spi_api.c ../main.c ../vga_api.c
 	$(GNG_CC) $(GNU_CC_FLAGS) $^\
 		-I ../Include -I ..\
 		-L $(LINKER_SCRIPT_PATH) \
