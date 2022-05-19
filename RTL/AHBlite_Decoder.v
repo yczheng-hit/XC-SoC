@@ -2,7 +2,7 @@ module AHBlite_Decoder #(parameter Port0_en = 1,
                          parameter Port1_en = 1,
                          parameter Port2_en = 1,
                          parameter Port3_en = 1,
-                         parameter Port4_en = 0)
+                         parameter Port4_en = 1)
                         (input [31:0] HADDR,
                          output wire P0_HSEL,
                          output wire P1_HSEL,
@@ -36,6 +36,6 @@ module AHBlite_Decoder #(parameter Port0_en = 1,
     assign P3_HSEL = (HADDR[31:4] == 28'h4000001) ? Port3_en : 1'b0;
     /***********************************/
     
-    assign P4_HSEL = 1'b0;
+    assign P4_HSEL = (HADDR[31:4] == 28'h4000002) ? Port4_en : 1'b0;
     
 endmodule
