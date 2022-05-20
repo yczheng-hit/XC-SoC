@@ -40,4 +40,7 @@ void VGA_Write_Char_Column(uint8_t *ch, uint8_t c_start, uint8_t c_end, uint8_t 
 void VGA_Print_Right(uint8_t *ch, uint8_t c);
 void VGA_Print_Left(uint8_t *ch, uint8_t c, uint8_t n);
 void VGA_Print_Mediate(uint8_t *ch, uint8_t c);
+void frame(unsigned int color);
+void Display_Info(void);
+void Display_FM(void);
 #endif

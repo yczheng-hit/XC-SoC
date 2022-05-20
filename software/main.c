@@ -15,7 +15,7 @@
 // #define VGA_PRINT_TEST
 /*Global Variable*/
 int row, col;
-
+unsigned int tick = 0;
 /*UART Interupt Handler*/
 void UART_Handler()
 {
@@ -41,17 +41,27 @@ void UART_Handler()
 }
 
 /*SysTick Interupt Handler*/
+//2HZ
 void SysTick_Handler()
 {
-
-  printf("Systick Handler!\n");
+  unsigned int mi,se;
+  tick++;
+  se = (tick>>2)%60;
+  mi = (tick>>2)/60;
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi/10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 0, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi%10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 1, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE(':'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 2, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se/10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 3, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se%10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 4, 0);
+//  frame(RGB(tick,tick>>1,tick>>2));
+  // printf("Systick Handler!\n");
 }
 
 /*Systick Init*/
 uint32_t Systick_Init(void)
 {
   SysTick->CTRL = 0;
-  // CPU clk 25MHz
+  // CPU clk 40MHz
   SysTick->LOAD = 10000000;
   SysTick->VAL = 0;
   SysTick->CTRL = 0x7;
@@ -80,8 +90,10 @@ int main(void)
   {
   }
 #endif
-
+  
   printf("** TEST PASSED1 **\n");
+  Display_Info();
+  Display_FM();
   while (1)
   {
     unsigned char ch;

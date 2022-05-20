@@ -99,7 +99,7 @@ void
 printf(char *fmt, ...)
 {
   va_list ap;
-  int i, c, locking;
+  int i, c;
   char *s;
 
   va_start(ap, fmt);

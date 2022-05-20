@@ -124,3 +124,39 @@ void VGA_Write_Char_Column(uint8_t *ch, uint8_t c_start, uint8_t c_end, uint8_t 
 		VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE(tmp), 0, RGB(0, 0, 0), RGB(7, 7, 7)), r, i);
 	}
 }
+
+void frame(unsigned int color)
+{
+	for (uint8_t i = 1; i < 13; i++)
+	{
+		VGA_Write_Block(BLOCK_CTRL(95, 0, RGB(0, 0, 0), color), 0, i);
+	}
+	for (uint8_t i = 1; i < 13; i++)
+	{
+		VGA_Write_Block(BLOCK_CTRL(95, 0, RGB(0, 0, 0), color), 31, i);
+	}
+	for (uint8_t i = 0; i < 32; i++)
+	{
+		VGA_Write_Block(BLOCK_CTRL(95, 0, RGB(0, 0, 0), color), i, 1);
+	}
+	for (uint8_t i = 0; i < 32; i++)
+	{
+		VGA_Write_Block(BLOCK_CTRL(95, 0, RGB(0, 0, 0), color), i, 11);
+	}
+}
+
+void Display_Info(void)
+{
+	VGA_Print_Mediate("Welcome to XC-SoC!", 2);
+	frame(RGB(0,7,7));
+}
+
+void Display_FM(void)
+{
+	VGA_Print_Mediate("Searching Automatically!", 4);
+	VGA_Print_Mediate("Current Radio Frequency", 5);
+	VGA_Print_Mediate("85.3 MHz", 6);
+	// frame(RGB(7,7,7));
+}
+
+
