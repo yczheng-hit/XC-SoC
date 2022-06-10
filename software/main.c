@@ -41,19 +41,19 @@ void UART_Handler()
 }
 
 /*SysTick Interupt Handler*/
-//2HZ
+// 2HZ
 void SysTick_Handler()
 {
-  unsigned int mi,se;
+  unsigned int mi, se;
   tick++;
-  se = (tick>>2)%60;
-  mi = (tick>>2)/60;
-  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi/10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 0, 0);
-  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi%10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 1, 0);
+  se = (tick >> 2) % 60;
+  mi = (tick >> 2) / 60;
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi / 10) + '0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 0, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((mi % 10) + '0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 1, 0);
   VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE(':'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 2, 0);
-  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se/10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 3, 0);
-  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se%10)+'0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 4, 0);
-//  frame(RGB(tick,tick>>1,tick>>2));
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se / 10) + '0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 3, 0);
+  VGA_Write_Block(BLOCK_CTRL(CHAR2IMAGE((se % 10) + '0'), 0, RGB(0, 0, 0), RGB(7, 7, 7)), 4, 0);
+  //  frame(RGB(tick,tick>>1,tick>>2));
   // printf("Systick Handler!\n");
 }
 
@@ -70,6 +70,7 @@ uint32_t Systick_Init(void)
   return (SysTick->VAL);
 }
 /*Main Function*/
+int R_frame,G_frame,B_frame;
 int main(void)
 {
   NVIC_EnableIRQ(UART_IRQn);
@@ -90,7 +91,7 @@ int main(void)
   {
   }
 #endif
-  
+
   printf("** TEST PASSED1 **\n");
   Display_Info();
   Display_FM();
@@ -108,12 +109,25 @@ int main(void)
     switch (ch)
     {
     case '1':
-      printf("Received: 1\n");
+      printf("Received: 1\r\n");
+      frame(RGB(0, 7, 2));
+      printf("Frame color changed!\r\n");
+
+      break;
+    case '2':
+      printf("Received: 2\r\n");
+      frame(RGB(7, 7, 0));
+      printf("Frame color changed!\r\n");
+      break;
+    case '3':
+      printf("Received: 2\r\n");
+      frame(RGB(R_frame,G_frame,B_frame));
+      printf("Frame color changed!\r\n");
       break;
     default:
-      printf("Command Error\n");
+      printf("Command Error\r\n");
       break;
     }
-    printf("Received: %c\n", ch);
+    printf("Received: %c\r\n", ch);
   }
 }

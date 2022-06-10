@@ -45,11 +45,11 @@ For more detail, read the source code please.
 #### Memory Map
 | Address Range            | Description |
 | ------------------------ | ----------- |
-| 0x00000000 .. 0x0000ffff | ROMCODE     |
+| 0X00000000 .. 0X0000FFFF | RAMCODE     |
 | 0X20000000 .. 0X2000FFFF | RAMDATA     |
 | 0X40000010 .. 0X4000001B | UART        |
 | 0X40000020 .. 0X4000002B | SPI         |
-| 0X40010000 .. 0X4001ffff | VGA         |
+| 0X40010000 .. 0X4001FFFF | VGA         |
 
 ## Files in this Repository
 
